@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es-AR" class="fs-normal">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Impuestos — En criollo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app-nav" class="app-nav"></div>
+
+<section class="page-header">
+  <div class="wrap narrow">
+    <p class="eyebrow">Una guía sin vueltas</p>
+    <h1>Los impuestos, explicados como te los explicaría un amigo contador.</h1>
+    <p>Sin jerga. Enterate qué impuestos existen, cuáles te tocan a vos, cuánto es aproximadamente y cuándo hay que pagarlos.</p>
+    <p class="disclaimer" style="margin-top:16px;">⚠️ Guía educativa con montos aproximados, no es asesoramiento impositivo. Confirmá en <a href="https://www.arca.gob.ar" target="_blank" rel="noopener">arca.gob.ar</a> o con un contador/a.</p>
+  </div>
+</section>
+
+<section class="section" id="monotributo">
+  <div class="wrap">
+    <span class="tax-tag">Régimen simplificado</span>
+    <h2 class="section-title">Monotributo</h2>
+    <div class="two-col" style="margin-top:16px;">
+      <div class="tax-explain">
+        <p><strong>¿Qué es?</strong> Una cuota mensual fija que reemplaza IVA, Ganancias, jubilación y obra social en un solo pago. Pensado para trabajadores independientes.</p>
+        <p><strong>¿Quién lo paga?</strong> Quien trabaje por su cuenta y facture por debajo de cierto tope anual. A más facturación, más categoría (A a K).</p>
+        <p><strong>¿Cuándo?</strong> <span id="mono-vencimiento"></span></p>
+      </div>
+      <div class="card">
+        <h3>Calculá tu categoría</h3>
+        <label for="mono-actividad">¿A qué te dedicás?</label>
+        <select id="mono-actividad">
+          <option value="servicios">Presto servicios (oficio, changas)</option>
+          <option value="bienes">Vendo productos</option>
+        </select>
+        <label for="mono-ingresos">¿Cuánto facturás por año? ($)</label>
+        <input type="number" id="mono-ingresos" placeholder="Ej: 15000000" min="0" step="1000">
+        <div class="form-actions"><button class="btn btn-primary btn-block" id="mono-calcular">Calcular</button></div>
+        <div id="mono-resultado"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="ganancias">
+  <div class="wrap">
+    <span class="tax-tag">Sobre lo que ganás</span>
+    <h2 class="section-title">Impuesto a las Ganancias</h2>
+    <div class="two-col" style="margin-top:16px;">
+      <div class="tax-explain">
+        <p><strong>¿Qué es?</strong> Impuesto sobre ingresos que superan un mínimo. Si trabajás en relación de dependencia, te lo descuenta el empleador.</p>
+        <p><strong>¿Quién?</strong> Sueldos altos, autónomos con ganancias importantes, empresas. La mayoría de sueldos bajos/medios no llega a pagarlo.</p>
+        <p>Casado/a o con hijos, tu piso sube (más deducciones).</p>
+      </div>
+      <div class="card">
+        <h3>Estimá tu piso salarial</h3>
+        <label for="gan-estado">Estado civil</label>
+        <select id="gan-estado">
+          <option value="soltero">Soltero/a</option>
+          <option value="casado">Casado/a (cónyuge a cargo)</option>
+        </select>
+        <label for="gan-hijos">Hijos/as menores a cargo</label>
+        <input type="number" id="gan-hijos" min="0" step="1" value="0">
+        <div class="form-actions"><button class="btn btn-primary btn-block" id="gan-calcular">Calcular</button></div>
+        <div id="gan-resultado"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="iva">
+  <div class="wrap">
+    <span class="tax-tag">El que pagamos todos</span>
+    <h2 class="section-title">IVA</h2>
+    <div class="two-col" style="margin-top:16px;">
+      <div class="tax-explain">
+        <p><strong>¿Qué es?</strong> Ya está incluido en el precio de casi todo lo que comprás.</p>
+        <p><strong>¿Cuánto?</strong> General <strong id="iva-general-inline"></strong>. Reducida <strong id="iva-reducida-inline"></strong> (canasta básica, etc). Incrementada <strong id="iva-incrementada-inline"></strong>.</p>
+      </div>
+      <div class="card">
+        <h3>Calculadora rápida de IVA</h3>
+        <label for="iva-monto">Monto ($)</label>
+        <input type="number" id="iva-monto" placeholder="Ej: 10000" min="0" step="1">
+        <label for="iva-alicuota">Alícuota</label>
+        <select id="iva-alicuota">
+          <option value="21">21% — general</option>
+          <option value="10.5">10,5% — reducida</option>
+          <option value="27">27% — incrementada</option>
+        </select>
+        <label for="iva-operacion">¿Qué querés hacer?</label>
+        <select id="iva-operacion">
+          <option value="agregar">Agregarle IVA a un precio sin IVA</option>
+          <option value="quitar">Saber cuánto IVA tiene un precio final</option>
+        </select>
+        <div class="form-actions"><button class="btn btn-primary btn-block" id="iva-calcular">Calcular</button></div>
+        <div id="iva-resultado"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="bienes">
+  <div class="wrap">
+    <span class="tax-tag">Sobre lo que tenés</span>
+    <h2 class="section-title">Bienes Personales</h2>
+    <div class="two-col" style="margin-top:16px;">
+      <div class="tax-explain">
+        <p><strong>¿Qué es?</strong> Impuesto anual sobre tu patrimonio total: propiedades, autos, inversiones, cuentas.</p>
+        <p><strong>¿Cuándo?</strong> Se declara y paga una vez al año, a mediados de junio.</p>
+      </div>
+      <div class="card">
+        <h3>¿Tengo que declararlo?</h3>
+        <label for="bp-patrimonio">Valor total de tus bienes ($)</label>
+        <input type="number" id="bp-patrimonio" placeholder="Ej: 200000000" min="0" step="10000">
+        <div class="form-actions"><button class="btn btn-primary btn-block" id="bp-calcular">Calcular</button></div>
+        <div id="bp-resultado"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="ingresos-brutos">
+  <div class="wrap narrow">
+    <span class="tax-tag">El impuesto provincial</span>
+    <h2 class="section-title">Ingresos Brutos</h2>
+    <p><strong>¿Qué es?</strong> A diferencia de los anteriores, lo cobra cada <strong>provincia</strong>, no ARCA.</p>
+    <p><strong>¿Dónde lo consulto?</strong> Buenos Aires: <a href="https://www.arba.gov.ar" target="_blank" rel="noopener">ARBA</a>. CABA: <a href="https://www.agip.gob.ar" target="_blank" rel="noopener">AGIP</a>.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2 class="section-title">¿Cuándo se paga cada cosa?</h2>
+    <p style="color:var(--paper-dim); margin-bottom:16px;">Para tu calendario completo con tus propios eventos, andá a <a href="calendario.html">Calendario</a>.</p>
+    <div id="calendario-fiscal-mini" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px;"></div>
+  </div>
+</section>
+
+<section class="section alt" id="glosario">
+  <div class="wrap narrow">
+    <h2 class="section-title">Glosario, en criollo</h2>
+    <dl class="glossary" id="glosario-lista"></dl>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>Última actualización: <strong id="footer-fecha"></strong>. Los montos se actualizan cada 6 meses por inflación.</p>
+  </div>
+</footer>
+
+<script src="core.js"></script>
+<script src="nav.js"></script>
+<script src="data.js"></script>
+<script src="pages.js"></script>
+</body>
+</html>

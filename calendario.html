@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es-AR" class="fs-normal">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendario — En criollo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app-nav" class="app-nav"></div>
+
+<section class="page-header">
+  <div class="wrap">
+    <p class="eyebrow">Todo en un solo lugar</p>
+    <h1>Calendario</h1>
+    <p>Los vencimientos impositivos aparecen solos. Los tuyos los agregás vos, tocando cualquier día.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="card">
+      <div class="cal-nav">
+        <h2 id="cal-titulo">—</h2>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-ghost btn-sm" id="cal-prev">← Anterior</button>
+          <button class="btn btn-ghost btn-sm" id="cal-hoy">Hoy</button>
+          <button class="btn btn-ghost btn-sm" id="cal-next">Siguiente →</button>
+        </div>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+      <ul class="legend">
+        <li><span class="dot dot-mono"></span> Monotributo</li>
+        <li><span class="dot dot-bp"></span> Bienes Personales</li>
+        <li><span class="dot dot-personal"></span> Evento tuyo</li>
+      </ul>
+    </div>
+
+    <div class="two-col" style="margin-top:18px;">
+      <div class="card">
+        <h3 id="panel-dia-titulo">—</h3>
+        <ul class="list" id="panel-dia-lista"></ul>
+      </div>
+      <div class="card">
+        <h3>Agregar algo a este día</h3>
+        <form id="form-evento">
+          <label for="evento-titulo">¿Qué es?</label>
+          <input type="text" id="evento-titulo" placeholder="Ej: Turno médico, pago de alquiler..." required>
+          <label for="evento-nota">Nota (opcional)</label>
+          <input type="text" id="evento-nota" placeholder="Algún detalle extra">
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Agregar al día seleccionado</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>Los vencimientos son fechas <strong>aproximadas</strong>. Confirmá siempre en <a href="https://www.arca.gob.ar" target="_blank" rel="noopener">arca.gob.ar</a>.</p>
+  </div>
+</footer>
+
+<script src="core.js"></script>
+<script src="nav.js"></script>
+<script src="data.js"></script>
+<script src="pages.js"></script>
+</body>
+</html>

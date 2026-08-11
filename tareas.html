@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es-AR" class="fs-normal">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tareas — En criollo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app-nav" class="app-nav"></div>
+
+<section class="page-header">
+  <div class="wrap">
+    <p class="eyebrow"><span id="tareas-contador">0 tareas pendientes</span></p>
+    <h1>Tareas</h1>
+    <p>Cosas para hacer, con o sin fecha. Marcá el casillero cuando la termines.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap two-col">
+
+    <div class="card" style="order:2;">
+      <h2>Tus tareas</h2>
+      <div class="filter-tabs">
+        <button class="filter-tab activo" data-filtro="pendientes">Pendientes</button>
+        <button class="filter-tab" data-filtro="completadas">Completadas</button>
+        <button class="filter-tab" data-filtro="todas">Todas</button>
+      </div>
+      <ul class="list" id="lista-tareas"></ul>
+    </div>
+
+    <div class="card" style="order:1;">
+      <h2>Agregar tarea</h2>
+      <form id="form-tarea">
+        <label for="tarea-texto">¿Qué hay que hacer?</label>
+        <input type="text" id="tarea-texto" placeholder="Ej: Pagar el Monotributo" required>
+        <label for="tarea-categoria">Categoría (opcional)</label>
+        <select id="tarea-categoria">
+          <option value="">Sin categoría</option>
+          <option value="Impuestos">Impuestos</option>
+          <option value="Finanzas">Finanzas</option>
+          <option value="Salud">Salud</option>
+          <option value="Casa">Casa</option>
+          <option value="Personal">Personal</option>
+          <option value="Otro">Otro</option>
+        </select>
+        <label for="tarea-fecha">Fecha límite (opcional)</label>
+        <input type="date" id="tarea-fecha">
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary btn-block">Agregar tarea</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<script src="core.js"></script>
+<script src="nav.js"></script>
+<script src="pages.js"></script>
+</body>
+</html>

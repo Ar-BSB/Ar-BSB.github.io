@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es-AR" class="fs-normal">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayuda — En criollo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app-nav" class="app-nav"></div>
+
+<section class="page-header">
+  <div class="wrap narrow">
+    <p class="eyebrow">Ayuda</p>
+    <h1>Cómo funciona este sitio</h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap narrow">
+
+    <div class="card" style="margin-bottom:18px;">
+      <h2>¿Dónde quedan mis datos?</h2>
+      <p>Tus tareas, eventos y movimientos de plata se guardan <strong>únicamente en este navegador</strong>. No hay cuenta, no hay contraseña, nadie más los ve.</p>
+      <p>Si abrís el sitio en otro navegador o dispositivo, vas a ver todo vacío — cada navegador tiene su propia "cajita" de guardado. Si tenés el sitio abierto en <strong>dos pestañas del mismo navegador</strong>, se sincronizan solas automáticamente.</p>
+    </div>
+
+    <div class="card" style="margin-bottom:18px;">
+      <h2>Copia de seguridad</h2>
+      <p>Para no perder nada, o para pasar tus datos a otro dispositivo:</p>
+      <button class="btn btn-primary" id="btn-exportar">⬇️ Descargar mi copia de seguridad</button>
+      <h3 style="margin-top:24px;">Restaurar una copia</h3>
+      <p>Elegí un archivo descargado antes:</p>
+      <input type="file" id="input-importar" accept="application/json">
+      <p id="importar-mensaje" style="margin-top:8px; font-size:0.88rem; color:var(--text-mute);"></p>
+    </div>
+
+    <div class="card" style="margin-bottom:18px;">
+      <h2>Tamaño de letra</h2>
+      <p>Arriba a la derecha: <strong>A-</strong>, <strong>A</strong>, <strong>A+</strong>. Tocá A+ si el texto te queda chico.</p>
+    </div>
+
+    <div class="card">
+      <h2>¿Por qué no una base de datos "de verdad"?</h2>
+      <p>Este sitio funciona gratis en GitHub Pages, sin cuentas ni servidores. Guardar en el navegador logra eso: privado e instantáneo. La contra es que no sincroniza solo entre dispositivos distintos — para eso está la copia de seguridad de arriba.</p>
+    </div>
+
+  </div>
+</section>
+
+<script src="core.js"></script>
+<script src="nav.js"></script>
+<script src="pages.js"></script>
+</body>
+</html>

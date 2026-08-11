@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es-AR" class="fs-normal">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — En criollo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app-nav" class="app-nav"></div>
+
+<section class="page-header">
+  <div class="wrap">
+    <p class="eyebrow">⚙️ Área técnica</p>
+    <h1>Datos en crudo</h1>
+    <p>Inspeccioná y editá tus datos directamente (formato JSON). Usalo solo si sabés qué hacés.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+
+    <div class="card" style="margin-bottom:18px;">
+      <h2>Tareas (JSON)</h2>
+      <textarea id="editor-tareas" style="font-family:monospace; font-size:0.82rem; min-height:180px;"></textarea>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="btn-guardar-tareas">Guardar</button>
+        <button class="btn btn-ghost" id="btn-recargar-tareas">Recargar</button>
+      </div>
+      <p id="msg-tareas" style="font-size:0.82rem; margin-top:6px;"></p>
+    </div>
+
+    <div class="card" style="margin-bottom:18px;">
+      <h2>Eventos (JSON)</h2>
+      <textarea id="editor-eventos" style="font-family:monospace; font-size:0.82rem; min-height:180px;"></textarea>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="btn-guardar-eventos">Guardar</button>
+        <button class="btn btn-ghost" id="btn-recargar-eventos">Recargar</button>
+      </div>
+      <p id="msg-eventos" style="font-size:0.82rem; margin-top:6px;"></p>
+    </div>
+
+    <div class="card" style="margin-bottom:18px;">
+      <h2>Finanzas (JSON)</h2>
+      <textarea id="editor-finanzas" style="font-family:monospace; font-size:0.82rem; min-height:220px;"></textarea>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="btn-guardar-finanzas">Guardar</button>
+        <button class="btn btn-ghost" id="btn-recargar-finanzas">Recargar</button>
+      </div>
+      <p id="msg-finanzas" style="font-size:0.82rem; margin-top:6px;"></p>
+    </div>
+
+    <div class="card" style="background:rgba(177,74,50,0.08); border-left:3px solid var(--rust);">
+      <h2 style="color:var(--rust);">⚠️ Zona de peligro</h2>
+      <button class="btn btn-danger" id="btn-limpiar-todo">🗑️ Borrar TODO</button>
+    </div>
+
+  </div>
+</section>
+
+<script src="core.js"></script>
+<script src="nav.js"></script>
+<script src="pages.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es-AR" class="fs-normal">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inicio — En criollo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app-nav" class="app-nav"></div>
+
+<section class="page-header">
+  <div class="wrap">
+    <p class="eyebrow">Tu centro de gestión</p>
+    <h1>Hola 👋</h1>
+    <p id="saludo-fecha" style="text-transform:capitalize;"></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+
+    <div class="cards-grid">
+      <div class="card stat-card" id="dash-vencimiento">
+        <div class="stat-label">Próximo vencimiento</div>
+        <div class="stat-value">—</div>
+        <div class="stat-note">Cargando...</div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-label">Tareas pendientes</div>
+        <div class="stat-value" id="dash-tareas-count">0</div>
+        <div class="stat-note"><a href="tareas.html">Ver todas →</a></div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-label">Balance de este mes</div>
+        <div class="stat-value" id="dash-balance">$0</div>
+        <div class="stat-note" id="dash-balance-note">—</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <h2>Tus próximas tareas</h2>
+        <ul class="list" id="dash-tareas-lista"></ul>
+        <form id="form-quick-tarea" style="margin-top:14px; display:flex; gap:8px;">
+          <input type="text" id="quick-tarea-texto" placeholder="Agregar una tarea rápida..." style="margin:0;">
+          <button type="submit" class="btn btn-primary btn-sm">Agregar</button>
+        </form>
+      </div>
+
+      <div class="card-dark">
+        <h2>Accesos rápidos</h2>
+        <ul class="list" style="margin-top:8px;">
+          <li class="list-item" style="border-color:var(--ink-line);"><a href="calendario.html" style="color:var(--paper); text-decoration:none; font-weight:700;">🗓️ Ver el calendario</a></li>
+          <li class="list-item" style="border-color:var(--ink-line);"><a href="finanzas.html" style="color:var(--paper); text-decoration:none; font-weight:700;">💰 Cargar ingreso/gasto</a></li>
+          <li class="list-item" style="border-color:var(--ink-line);"><a href="impuestos.html" style="color:var(--paper); text-decoration:none; font-weight:700;">🧾 Calculadoras de impuestos</a></li>
+          <li class="list-item" style="border-color:var(--ink-line);"><a href="ayuda.html" style="color:var(--paper); text-decoration:none; font-weight:700;">❓ Ayuda y backup</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>Última actualización de montos impositivos: <strong>4 de agosto de 2026</strong>. Tus datos quedan solo en este navegador.</p>
+  </div>
+</footer>
+
+<script src="core.js"></script>
+<script src="nav.js"></script>
+<script src="data.js"></script>
+<script src="pages.js"></script>
+</body>
+</html>

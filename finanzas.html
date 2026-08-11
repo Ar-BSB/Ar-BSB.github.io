@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es-AR" class="fs-normal">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi plata — En criollo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app-nav" class="app-nav"></div>
+
+<section class="page-header">
+  <div class="wrap">
+    <p class="eyebrow">Sin juicios, solo un registro claro</p>
+    <h1>Mi plata</h1>
+    <p>Cargá lo que entra y lo que sale. Vos decidís las conclusiones — esto solo te muestra el panorama.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+
+    <div class="card">
+      <div class="cal-nav">
+        <h2 id="fin-titulo" style="text-transform:capitalize;">—</h2>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-ghost btn-sm" id="fin-prev">← Mes anterior</button>
+          <button class="btn btn-ghost btn-sm" id="fin-next">Mes siguiente →</button>
+        </div>
+      </div>
+      <div class="cards-grid" style="margin-bottom:0;">
+        <div class="stat-card good">
+          <div class="stat-label">Ingresos</div>
+          <div class="stat-value" id="fin-ingresos">$0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Gastos</div>
+          <div class="stat-value" id="fin-gastos" style="color:var(--rust);">$0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Balance</div>
+          <div class="stat-value" id="fin-balance">$0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-top:18px;">
+      <div class="card">
+        <h2>Movimientos del mes</h2>
+        <ul class="list" id="lista-movimientos"></ul>
+      </div>
+      <div class="card">
+        <h2>Agregar movimiento</h2>
+        <form id="form-movimiento">
+          <div class="form-row">
+            <div>
+              <label for="mov-tipo">Tipo</label>
+              <select id="mov-tipo">
+                <option value="gasto">Gasto</option>
+                <option value="ingreso">Ingreso</option>
+              </select>
+            </div>
+            <div>
+              <label for="mov-monto">Monto ($)</label>
+              <input type="number" id="mov-monto" min="0" step="1" required>
+            </div>
+          </div>
+          <label for="mov-categoria">Categoría</label>
+          <select id="mov-categoria">
+            <option>Sueldo</option>
+            <option>Changa / trabajo independiente</option>
+            <option>Impuestos</option>
+            <option>Alquiler / Expensas</option>
+            <option>Comida</option>
+            <option>Transporte</option>
+            <option>Salud</option>
+            <option>Servicios (luz, gas, internet)</option>
+            <option>Ocio</option>
+            <option>Otro</option>
+          </select>
+          <label for="mov-fecha">Fecha</label>
+          <input type="date" id="mov-fecha" required>
+          <label for="mov-nota">Nota (opcional)</label>
+          <input type="text" id="mov-nota" placeholder="Algún detalle">
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-block">Agregar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:18px;">
+      <h2>Gastos por categoría</h2>
+      <div id="fin-barras"></div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>Registro personal, no un asesor: no juzga tus números. Tus datos quedan solo en este navegador.</p>
+  </div>
+</footer>
+
+<script src="core.js"></script>
+<script src="nav.js"></script>
+<script src="pages.js"></script>
+</body>
+</html>
