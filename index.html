@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Recetera</title>
+<meta name="description" content="Recetas argentinas explicadas fácil, con una mano si te trabás en el camino.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<div class="app">
+  <div class="header-row">
+    <div class="brand">
+      <div class="mark"></div>
+      <h1>La Recetera</h1>
+    </div>
+    <button type="button" id="resetBtn" class="reset-btn" hidden>Empezar de nuevo</button>
+  </div>
+  <p class="tagline">Recetas argentinas, explicadas fácil — y una mano si te trabás en el camino.</p>
+
+  <form class="ask" id="askForm" autocomplete="off">
+    <input type="text" id="userInput" placeholder="¿Qué querés cocinar, o en qué te puedo ayudar?" autocomplete="off" enterkeyhint="send">
+    <button type="submit" id="sendBtn" disabled>Preguntar</button>
+  </form>
+
+  <!-- Only shown when there is no proxy configured (local use): asks for a
+       Groq key once and keeps it in this browser. -->
+  <div class="key-gate" id="keyGate" hidden>
+    <p class="key-gate-title">Falta conectar la cocina</p>
+    <p class="key-gate-text">Pegá tu clave de Groq para usar La Recetera en esta computadora. Queda guardada solo en este navegador.</p>
+    <form class="key-gate-form" id="keyForm" autocomplete="off">
+      <input type="password" id="keyInput" placeholder="gsk_..." autocomplete="off" spellcheck="false">
+      <button type="submit">Guardar clave</button>
+    </form>
+    <p class="key-gate-note" id="keyError" hidden>Esa clave no parece válida. Empieza con <code>gsk_</code>.</p>
+  </div>
+
+  <div class="starters" id="starters">
+    <p class="starters-title">Para arrancar</p>
+    <div class="starter-list">
+      <button type="button" class="starter">Quiero hacer milanesas</button>
+      <button type="button" class="starter">Algo rápido con lo que tengo: huevos, cebolla y arroz</button>
+      <button type="button" class="starter">¿Cómo hago para que la masa de tarta no quede cruda abajo?</button>
+      <button type="button" class="starter">Contame de dónde salió el locro</button>
+    </div>
+  </div>
+
+  <div class="feed" id="feed"></div>
+</div>
+
+<script src="config.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
