@@ -1,0 +1,132 @@
+/* site.css — shared chrome for the portfolio (home page + "Volver al inicio" link).
+   Deliberately scoped: nothing here touches the internal design of the apps/games. */
+
+/* ---------- "Volver al inicio" link, used on every inner page ---------- */
+.home-link {
+  display: inline-block;
+  margin: 12px 14px 0;
+  padding: 4px 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: inherit;
+  opacity: .72;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: opacity .15s ease, border-color .15s ease;
+}
+.home-link:hover { opacity: 1; border-bottom-color: currentColor; }
+.home-link:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; opacity: 1; }
+main > .home-link, .app > .home-link, .wrap > .home-link { margin: 0 0 16px; }
+
+/* ---------- Home page ---------- */
+body.home {
+  --bg: #ffffff;
+  --paper: #fffaf5;
+  --ink: #1a1613;
+  --soft: #6f6a63;
+  --line: #ece4d8;
+  --orange: #e8590c;
+  --orange-deep: #b3430a;
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.55;
+  -webkit-text-size-adjust: 100%;
+}
+@media (prefers-color-scheme: dark) {
+  body.home {
+    --bg: #14110f;
+    --paper: #1b1714;
+    --ink: #f1ebe3;
+    --soft: #a39b91;
+    --line: #2e2823;
+    --orange: #ff7a33;
+    --orange-deep: #ff9a62;
+  }
+}
+body.home * { box-sizing: border-box; }
+
+.page { max-width: 760px; margin: 0 auto; padding: 40px 22px 56px; }
+
+.topline { display: flex; align-items: center; gap: 10px; margin-bottom: 64px; font-size: 14px; color: var(--soft); }
+.topline .mark { width: 10px; height: 10px; background: var(--orange); }
+.topline strong { color: var(--ink); font-weight: 600; letter-spacing: .01em; }
+
+.home h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(32px, 6vw, 46px);
+  line-height: 1.12;
+  letter-spacing: -.015em;
+  margin: 0 0 14px;
+}
+.lead { font-size: 17px; color: var(--soft); max-width: 34rem; margin: 0 0 48px; }
+
+.eyebrow {
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--soft);
+  margin: 0 0 12px;
+}
+
+/* main project */
+.feature {
+  display: block;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--orange);
+  padding: 30px 28px 26px;
+  color: inherit;
+  text-decoration: none;
+  margin-bottom: 52px;
+  transition: transform .15s ease, border-color .15s ease;
+}
+.feature:hover { transform: translateY(-3px); border-color: var(--orange); }
+.feature:focus-visible, .game:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+.feature .tag { font-size: 12.5px; color: var(--orange-deep); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.feature h2 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 30px; margin: 8px 0 10px; }
+.feature p { margin: 0 0 18px; max-width: 34rem; }
+.feature .note { font-size: 13.5px; color: var(--soft); margin-bottom: 20px; }
+.feature .cta { font-weight: 600; font-size: 14.5px; color: var(--orange-deep); }
+
+/* games */
+.games { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 56px; }
+.game {
+  display: block;
+  border: 1px solid var(--line);
+  padding: 18px 16px 16px;
+  color: inherit;
+  text-decoration: none;
+  transition: transform .15s ease, border-color .15s ease;
+}
+.game:hover { transform: translateY(-3px); border-color: var(--orange); }
+.game h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 18px; margin: 0 0 6px; }
+.game p { margin: 0; font-size: 13.5px; color: var(--soft); }
+
+/* reading list: intentionally quiet */
+.reading { font-size: 13.5px; color: var(--soft); margin: 0 0 8px; }
+.reading a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--line); }
+.reading a:hover { color: var(--orange-deep); border-bottom-color: var(--orange); }
+.reading a:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+.foot {
+  margin-top: 64px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
+  font-size: 13px; color: var(--soft);
+}
+.foot a { color: inherit; }
+.foot a:hover { color: var(--orange-deep); }
+
+@media (max-width: 620px) {
+  .games { grid-template-columns: 1fr; }
+  .topline { margin-bottom: 44px; }
+  .feature { padding: 24px 20px 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .feature, .game, .home-link { transition: none; }
+  .feature:hover, .game:hover { transform: none; }
+}

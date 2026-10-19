@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía sencilla de Linux, privacidad y libertad digital</title>
+<meta name="description" content="Guía introductoria sobre sistemas operativos, Linux, privacidad digital y cómo empezar sin riesgos.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231a1613'/%3E%3Crect x='9' y='9' width='14' height='14' fill='%23e8590c'/%3E%3C/svg%3E">
+<link rel="canonical" href="https://ar-bsb.github.io/guia-linux.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ar-BSB">
+<meta property="og:title" content="Guía sencilla de Linux, privacidad y libertad digital">
+<meta property="og:description" content="Guía introductoria sobre sistemas operativos, Linux, privacidad digital y cómo empezar sin riesgos.">
+<meta property="og:url" content="https://ar-bsb.github.io/guia-linux.html">
+<meta property="og:locale" content="es_AR">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Guía sencilla de Linux, privacidad y libertad digital">
+<meta name="twitter:description" content="Guía introductoria sobre sistemas operativos, Linux, privacidad digital y cómo empezar sin riesgos.">
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #fbfbf9;
+    --fg: #1b1b1b;
+    --muted: #5c5c58;
+    --rule: #dedeD7;
+    --accent: #2f6f4f;
+    --accent-soft: #eef3ef;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #16171a;
+      --fg: #e7e7e3;
+      --muted: #a3a39c;
+      --rule: #2f3136;
+      --accent: #7fc39c;
+      --accent-soft: #1d2a23;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #16171a;
+    --fg: #e7e7e3;
+    --muted: #a3a39c;
+    --rule: #2f3136;
+    --accent: #7fc39c;
+    --accent-soft: #1d2a23;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    padding: 0 1.25rem 4rem;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 44rem;
+    margin: 0 auto;
+  }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 1.5rem;
+  }
+
+  .kicker {
+    margin: 0;
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  #theme-toggle {
+    font: inherit;
+    font-size: 0.82rem;
+    line-height: 1;
+    padding: 0.5rem 0.85rem;
+    color: var(--fg);
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  #theme-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  #theme-toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  h1 {
+    margin: 1.25rem 0 0.75rem;
+    font-size: clamp(1.65rem, 6vw, 2.1rem);
+    line-height: 1.2;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+  }
+
+  .lead {
+    margin: 0 0 1.75rem;
+    color: var(--muted);
+    font-size: 1.03rem;
+  }
+
+  .toc {
+    margin: 0 0 2.5rem;
+    padding: 0.85rem 1rem;
+    background: var(--accent-soft);
+    border-radius: 0.5rem;
+    font-size: 0.92rem;
+    color: var(--muted);
+  }
+
+  .toc p {
+    margin: 0 0 0.35rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .toc ol {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+
+  .toc li {
+    margin-bottom: 0.15rem;
+  }
+
+  .toc a {
+    color: var(--fg);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+
+  .toc a:hover {
+    border-bottom-color: var(--accent);
+  }
+
+  h2 {
+    margin: 2.75rem 0 0.9rem;
+    padding-top: 1.35rem;
+    border-top: 1px solid var(--rule);
+    font-size: 1.18rem;
+    line-height: 1.35;
+    font-weight: 650;
+  }
+
+  h2 .num {
+    color: var(--accent);
+    margin-right: 0.45rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  p { margin: 0 0 1rem; }
+
+  ul, ol {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+  }
+
+  li { margin-bottom: 0.55rem; }
+
+  strong { font-weight: 630; }
+
+  .note {
+    margin: 1.25rem 0;
+    padding: 0.1rem 0 0.1rem 0.9rem;
+    border-left: 2px solid var(--accent);
+    color: var(--muted);
+    font-size: 0.97rem;
+  }
+
+  .note p:last-child { margin-bottom: 0; }
+
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+    color: var(--muted);
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+
+  footer p { margin: 0 0 0.4rem; }
+</style>
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<div class="wrap">
+
+  <a class="home-link" href="index.html">← Volver al inicio</a>
+<header>
+    <div class="topbar">
+      <p class="kicker">Guía</p>
+      <button id="theme-toggle" type="button" aria-label="Cambiar tema">Tema oscuro</button>
+    </div>
+    <h1>Guía sencilla de Linux, privacidad y libertad digital</h1>
+    <p class="lead">
+      Esta guía está dirigida a personas sin conocimientos técnicos. Cada término se explica
+      la primera vez que aparece. No se supone experiencia previa y no se promete nada que no
+      pueda cumplirse: la intención es informar para que cada persona pueda decidir sobre sus
+      propios dispositivos.
+    </p>
+
+    <nav class="toc" aria-label="Contenido">
+      <p>Contenido</p>
+      <ol>
+        <li><a href="#sistema-operativo">Qué es un sistema operativo</a></li>
+        <li><a href="#linux">Qué es Linux y por qué se dice que es libre</a></li>
+        <li><a href="#por-que">Por qué puede convenir</a></li>
+        <li><a href="#limites">Limitaciones que conviene conocer</a></li>
+        <li><a href="#privacidad">Privacidad más allá del sistema operativo</a></li>
+        <li><a href="#empezar">Cómo empezar sin riesgos</a></li>
+      </ol>
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="sistema-operativo">
+      <h2><span class="num">1</span>Qué es un sistema operativo</h2>
+
+      <p>
+        Un <strong>sistema operativo</strong> es el conjunto de programas que coordina el
+        <strong>hardware</strong> —los componentes físicos de la computadora: procesador, memoria,
+        disco, pantalla, teclado— y permite que funcionen los demás programas. Sin sistema
+        operativo, la computadora no puede iniciarse ni interpretar ninguna orden.
+      </p>
+
+      <p>
+        Ejemplos conocidos son Windows (de Microsoft), macOS (de Apple), Android (de Google) y
+        Linux. Todos cumplen la misma función básica, pero se diferencian en quién los desarrolla,
+        qué permiten modificar y qué datos recogen.
+      </p>
+
+      <p>
+        El sistema operativo decide, entre otras cosas, qué programas pueden acceder a los archivos,
+        a la cámara o a la conexión de red. Por eso su elección tiene consecuencias directas sobre
+        la privacidad y sobre el control que cada persona ejerce sobre su propio equipo. Quien usa
+        una computadora debería poder saber qué ocurre en ella y decidir al respecto; esta guía
+        parte de esa idea.
+      </p>
+    </section>
+
+    <section id="linux">
+      <h2><span class="num">2</span>Qué es Linux y por qué se dice que es libre</h2>
+
+      <p>
+        <strong>Linux</strong> es un sistema operativo. Su componente central —el
+        <strong>núcleo</strong> o <em>kernel</em>, la parte que se comunica directamente con el
+        hardware— fue iniciado en 1991 por Linus Torvalds y se combina habitualmente con herramientas
+        del proyecto GNU, una iniciativa anterior que aporta gran parte de los programas básicos.
+        Por ese motivo también se lo denomina <strong>GNU/Linux</strong>.
+      </p>
+
+      <p>
+        A diferencia de Windows o macOS, Linux no pertenece a una sola empresa. Existen muchas
+        <strong>distribuciones</strong>: versiones completas del sistema, con instalador, programas
+        y actualizaciones, mantenidas por comunidades o por empresas. Cada distribución arma el
+        sistema con las mismas piezas de base y agrega decisiones propias sobre la apariencia, los
+        programas incluidos y el modo de soporte.
+      </p>
+
+      <p>
+        La palabra «libre» suele prestarse a confusión, porque designa dos cosas distintas:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Libertad:</strong> el <strong>código fuente</strong> —el texto legible por personas
+          en el que está escrito un programa— es público y puede estudiarse, modificarse y
+          redistribuirse. Esto significa que cualquiera puede verificar qué hace el sistema y, si
+          lo desea, corregirlo o adaptarlo.
+        </li>
+        <li>
+          <strong>Gratuidad:</strong> la mayoría de las distribuciones se distribuyen sin costo.
+          No todas: existen versiones comerciales, con soporte técnico pago, y también componentes
+          privativos que algunas distribuciones ofrecen como opción.
+        </li>
+      </ul>
+
+      <p>
+        Conviene retener que «libre» no es sinónimo de «sin costo» ni de «sin reglas»: las licencias
+        libres se apoyan en normas jurídicas que garantizan esas libertades a quien recibe el
+        programa.
+      </p>
+    </section>
+
+    <section id="por-que">
+      <h2><span class="num">3</span>Por qué puede convenir</h2>
+
+      <ul>
+        <li>
+          <strong>Privacidad.</strong> Por defecto, la mayoría de las distribuciones no envía
+          <strong>telemetría</strong> —informes automáticos sobre el uso del equipo— a servidores
+          del fabricante. Cabe aclarar que esto no vuelve privada a una persona por sí solo: los
+          programas que se instalen, los sitios que se visiten y las cuentas que se usen siguen
+          recolectando datos según sus propias políticas.
+        </li>
+        <li>
+          <strong>Seguridad.</strong> Los programas se instalan normalmente desde
+          <strong>repositorios</strong>: servidores oficiales de la distribución, con paquetes
+          firmados digitalmente para verificar su origen. Las actualizaciones se concentran en un
+          solo lugar y el sistema aplica permisos de usuario que limitan el alcance de un programa
+          comprometido. Ningún sistema es invulnerable; la diferencia está en la superficie de
+          ataque y en la rapidez con que se corrigen las fallas.
+        </li>
+        <li>
+          <strong>Control.</strong> Se puede cambiar el <strong>entorno de escritorio</strong> —la
+          interfaz con la que se interactúa con el equipo—, saber qué programas se ejecutan,
+          desinstalar lo que no se usa y examinar el funcionamiento del sistema. Esa posibilidad de
+          inspección no existe en los sistemas cerrados.
+        </li>
+        <li>
+          <strong>Nueva vida para equipos antiguos.</strong> Linux suele requerir menos recursos que
+          los sistemas comerciales, de modo que una computadora de varios años puede seguir siendo
+          útil para tareas cotidianas y se posterga su descarte. No se trata de un milagro: un equipo
+          con poca memoria o con un disco rígido mecánico mejora, pero no se transforma en uno nuevo.
+        </li>
+      </ul>
+    </section>
+
+    <section id="limites">
+      <h2><span class="num">4</span>Limitaciones que conviene conocer</h2>
+
+      <p>
+        Ninguna de estas limitaciones invalida las ventajas anteriores, pero corresponde
+        mencionarlas antes de tomar una decisión.
+      </p>
+
+      <ul>
+        <li>
+          <strong>Programas de Adobe.</strong> Photoshop, Illustrator e InDesign no tienen versión
+          nativa para Linux. Existen alternativas libres para muchas tareas, pero no son idénticas
+          ni abren todos los archivos con total fidelidad.
+        </li>
+        <li>
+          <strong>Microsoft Office.</strong> No hay versión nativa. Se puede usar la versión web o
+          suites como LibreOffice, que cubre el uso general pero no todas las funciones avanzadas ni
+          las macros complejas.
+        </li>
+        <li>
+          <strong>Juegos.</strong> Una parte importante funciona bien mediante capas de
+          compatibilidad como Proton, integrada en Steam. Otros títulos no funcionan, en especial los
+          que incluyen <strong>sistemas antitrampa</strong> (programas que verifican que el juego no
+          esté modificado) y que no admiten Linux.
+        </li>
+        <li>
+          <strong>Herramientas de trabajo específicas.</strong> Software contable, de facturación,
+          de diseño industrial, clientes de <strong>VPN</strong> (red privada virtual: un túnel
+          cifrado hacia la red de una empresa) y controladores de impresoras o escáneres
+          profesionales pueden no estar disponibles o funcionar de forma parcial.
+        </li>
+        <li>
+          <strong>Soporte del fabricante.</strong> Aunque existen comunidades activas, no siempre se
+          cuenta con soporte oficial del fabricante del equipo. En algunos modelos puede ser
+          necesario ajustar opciones de arranque; la documentación de cada distribución lo explica.
+        </li>
+      </ul>
+
+      <div class="note">
+        <p>
+          Antes de cambiar de sistema conviene verificar que los programas indispensables para el
+          trabajo o el estudio funcionen en Linux, o que exista una alternativa aceptable.
+        </p>
+      </div>
+    </section>
+
+    <section id="privacidad">
+      <h2><span class="num">5</span>Privacidad más allá del sistema operativo</h2>
+
+      <p>
+        La privacidad no depende solo del sistema operativo de la computadora. En el caso de los
+        teléfonos, la mayor parte de los dispositivos se entrega con Android y con las aplicaciones
+        de Google preinstaladas y vinculadas a una cuenta.
+      </p>
+
+      <p>
+        <strong>LineageOS</strong> es un sistema operativo para teléfonos, basado en Android pero
+        desarrollado por una comunidad independiente, que se instala en reemplazo del sistema
+        original. Por defecto no incluye las aplicaciones de Google (Gmail, Maps, Play Store), que en
+        Android estándar suelen venir instaladas.
+      </p>
+
+      <p>Corresponde señalar varias advertencias:</p>
+
+      <ul>
+        <li>
+          <strong>No vuelve privado al teléfono por sí solo.</strong> Las aplicaciones que se
+          instalen, la conexión a internet y las cuentas que se usen siguen recolectando datos. Sin
+          Play Store es necesario recurrir a otras tiendas, como F-Droid, y revisar cada aplicación
+          antes de instalarla.
+        </li>
+        <li>
+          <strong>Requiere un modelo compatible.</strong> El soporte se limita a una lista de
+          dispositivos; los modelos más populares suelen tener mejor mantenimiento y actualizaciones
+          más frecuentes.
+        </li>
+        <li>
+          <strong>Puede anular la garantía.</strong> El procedimiento implica desbloquear el
+          <strong>gestor de arranque</strong> (el programa que inicia el sistema), lo que en la
+          mayoría de los fabricantes anula la garantía. También puede impedir el funcionamiento de
+          aplicaciones bancarias que verifican la integridad del sistema, y dificultar la vuelta al
+          sistema original.
+        </li>
+        <li>
+          <strong>El procedimiento es técnico.</strong> Requiere leer instrucciones con atención y
+          hacer una copia de seguridad previa. Un error durante la instalación puede dejar el equipo
+          inutilizable.
+        </li>
+      </ul>
+
+      <p>
+        Para quienes buscan el máximo nivel de seguridad existen otras alternativas, como
+        GrapheneOS, con requisitos aún más estrictos: funciona únicamente en determinados modelos.
+      </p>
+
+      <h2 style="border-top: none; padding-top: 0; margin-top: 2rem;">Hábitos básicos que conviene adoptar</h2>
+
+      <p>
+        Ningún sistema reemplaza las buenas prácticas. Tres hábitos sencillos mejoran la situación
+        de forma considerable:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Gestor de contraseñas.</strong> Es un programa que guarda las contraseñas
+          <strong>cifradas</strong> —es decir, transformadas para que solo puedan leerse con una
+          clave— bajo una contraseña maestra. Permite usar una contraseña distinta y extensa en cada
+          sitio, sin necesidad de memorizarlas todas.
+        </li>
+        <li>
+          <strong>Verificación en dos pasos.</strong> Consiste en sumar a la contraseña un segundo
+          factor, por ejemplo un código generado por una aplicación. Conviene preferir una aplicación
+          de códigos o una llave física antes que los mensajes de texto, que son más vulnerables.
+        </li>
+        <li>
+          <strong>Actualizaciones.</strong> Deben instalarse las que el sistema ofrece: corrigen
+          errores y fallas de seguridad conocidas. Un equipo sin actualizar es más vulnerable,
+          independientemente del sistema que utilice.
+        </li>
+      </ul>
+    </section>
+
+    <section id="empezar">
+      <h2><span class="num">6</span>Cómo empezar sin riesgos</h2>
+
+      <p>
+        Se puede probar Linux sin instalarlo y sin modificar el disco de la computadora. El
+        procedimiento consiste en grabar la <strong>imagen</strong> de una distribución —un archivo
+        <code>.iso</code>, es decir, una copia completa del sistema— en una
+        <strong>memoria USB</strong> de 8 GB o más, y luego iniciar la computadora desde esa memoria.
+      </p>
+
+      <p>
+        Al arrancar de ese modo se trabaja en una <strong>sesión en vivo</strong>: el sistema se
+        ejecuta desde la memoria y no accede a los archivos del disco, salvo que se indique
+        expresamente lo contrario. Es más lenta que una instalación real y los cambios se pierden al
+        apagar, pero permite conocer el entorno y comprobar si el hardware funciona: conexión
+        inalámbrica, sonido, pantalla, impresora.
+      </p>
+
+      <p>Para una primera experiencia se recomiendan dos distribuciones:</p>
+
+      <ul>
+        <li>
+          <strong>Linux Mint:</strong> entorno de escritorio Cinnamon, con una disposición de
+          ventanas y menús similar a la de Windows, lo que reduce la curva de aprendizaje.
+        </li>
+        <li>
+          <strong>Ubuntu:</strong> ofrece versiones de soporte prolongado, con actualizaciones de
+          seguridad durante varios años, y una comunidad amplia donde consultar dudas.
+        </li>
+      </ul>
+
+      <p>
+        Antes de instalar de forma definitiva conviene hacer una copia de seguridad de los archivos
+        personales y leer la guía oficial de la distribución elegida. No es necesario tomar una
+        decisión inmediata: probar el sistema desde una memoria USB no modifica la computadora y no
+        compromete nada.
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      Documento introductorio, de carácter general. No sustituye la documentación oficial de cada
+      proyecto ni el asesoramiento técnico para casos particulares.
+    </p>
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var button = document.getElementById('theme-toggle');
+    var stored = null;
+
+    try {
+      stored = window.localStorage.getItem('tema');
+    } catch (error) {
+      stored = null;
+    }
+
+    if (stored === 'dark' || stored === 'light') {
+      root.setAttribute('data-theme', stored);
+    }
+
+    function currentTheme() {
+      var explicit = root.getAttribute('data-theme');
+      if (explicit === 'dark' || explicit === 'light') {
+        return explicit;
+      }
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light';
+    }
+
+    function updateButton() {
+      var isDark = currentTheme() === 'dark';
+      button.textContent = isDark ? 'Tema claro' : 'Tema oscuro';
+      button.setAttribute('aria-label', isDark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro');
+    }
+
+    button.addEventListener('click', function () {
+      var next = currentTheme() === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try {
+        window.localStorage.setItem('tema', next);
+      } catch (error) {
+        /* almacenamiento no disponible */
+      }
+      updateButton();
+    });
+
+    updateButton();
+  })();
+</script>
+</body>
+</html>

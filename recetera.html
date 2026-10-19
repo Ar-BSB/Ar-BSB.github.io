@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Recetera — asistente de cocina argentina con IA</title>
+<meta name="description" content="Recetas argentinas explicadas fácil, con una mano si te trabás en el camino. Asistente con IA: guardá recetas, armá tu lista de compras y filtrá por restricciones.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231a1613'/%3E%3Crect x='9' y='9' width='14' height='14' fill='%23e8590c'/%3E%3C/svg%3E">
+<link rel="canonical" href="https://ar-bsb.github.io/recetera.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ar-BSB">
+<meta property="og:title" content="La Recetera — asistente de cocina argentina con IA">
+<meta property="og:description" content="Recetas argentinas explicadas fácil, con una mano si te trabás en el camino. Asistente con IA: guardá recetas, armá tu lista de compras y filtrá por restricciones.">
+<meta property="og:url" content="https://ar-bsb.github.io/recetera.html">
+<meta property="og:locale" content="es_AR">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="La Recetera — asistente de cocina argentina con IA">
+<meta name="twitter:description" content="Recetas argentinas explicadas fácil, con una mano si te trabás en el camino. Asistente con IA: guardá recetas, armá tu lista de compras y filtrá por restricciones.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="site.css">
+
+</head>
+<body>
+
+<div class="app">
+  <a class="home-link" href="index.html">← Volver al inicio</a>
+  <div class="header-row">
+    <div class="brand">
+      <div class="mark"></div>
+      <h1>La Recetera</h1>
+    </div>
+    <div class="header-actions">
+      <button type="button" id="resetBtn" class="reset-btn" hidden>Empezar de nuevo</button>
+      <button type="button" id="menuBtn" class="menu-btn" aria-expanded="false" aria-controls="sidebar">
+        <span class="menu-btn-mark"><span></span><span></span><span></span></span>
+        Menú
+      </button>
+    </div>
+  </div>
+  <p class="tagline">Recetas argentinas, explicadas fácil — y una mano si te trabás en el camino.</p>
+
+  <!-- Shown only if this browser isn't actually persisting localStorage
+       between visits (opened as a bare file, or a preview that gets a new
+       address each time) — so "nothing was saved" has a visible reason. -->
+  <p class="storage-warning" id="storageWarning" hidden>
+    Este navegador no está guardando nada entre visitas — recetas guardadas, lista de compras y preferencias se van a perder al recargar. Pasa cuando la página se abre como archivo suelto o en una vista previa temporal; probála ya publicada o desde un servidor local.
+  </p>
+
+  <!-- Shared-recipe banner: shown only when the page is opened from a share link -->
+  <div class="shared-banner" id="sharedBanner" hidden>
+    <p>Te compartieron esta receta.</p>
+    <button type="button" id="sharedContinueBtn">Seguir charlando con La Recetera</button>
+  </div>
+
+  <form class="ask" id="askForm" autocomplete="off">
+    <input type="text" id="userInput" placeholder="¿Qué querés cocinar, o en qué te puedo ayudar?" autocomplete="off" enterkeyhint="send">
+    <button type="submit" id="sendBtn" disabled>Preguntar</button>
+  </form>
+
+  <!-- Only shown when there is no proxy configured (local use): asks for a
+       Groq key once and keeps it in this browser. -->
+  <div class="key-gate" id="keyGate" hidden>
+    <p class="key-gate-title">Falta conectar la cocina</p>
+    <p class="key-gate-text">Pegá tu clave de Groq para usar La Recetera en esta computadora. Queda guardada solo en este navegador.</p>
+    <form class="key-gate-form" id="keyForm" autocomplete="off">
+      <input type="password" id="keyInput" placeholder="gsk_..." autocomplete="off" spellcheck="false">
+      <button type="submit">Guardar clave</button>
+    </form>
+    <p class="key-gate-note" id="keyError" hidden>Esa clave no parece válida. Empieza con <code>gsk_</code>.</p>
+  </div>
+
+  <div class="starters" id="starters">
+    <p class="starters-title">Para arrancar</p>
+    <div class="starter-list">
+      <button type="button" class="starter">Quiero hacer milanesas</button>
+      <button type="button" class="starter">Algo rápido con lo que tengo: huevos, cebolla y arroz</button>
+      <button type="button" class="starter">¿Cómo hago para que la masa de tarta no quede cruda abajo?</button>
+      <button type="button" class="starter">Contame de dónde salió el locro</button>
+    </div>
+  </div>
+
+  <div class="feed" id="feed"></div>
+</div>
+
+<!-- Single sidebar for everything that isn't the conversation itself:
+     appearance, dietary filters, saved recipes, shopping list. -->
+<div class="sidebar-overlay" id="sidebarOverlay" hidden></div>
+<aside class="sidebar" id="sidebar" aria-label="Menú" aria-hidden="true">
+  <div class="sidebar-head">
+    <p class="sidebar-title">Menú</p>
+    <button type="button" class="panel-close" id="sidebarCloseBtn">Cerrar</button>
+  </div>
+
+  <div class="sidebar-section">
+    <p class="sidebar-section-title">Apariencia</p>
+    <button type="button" class="nav-btn theme-btn" id="themeBtn">Modo oscuro</button>
+  </div>
+
+  <div class="sidebar-section">
+    <p class="sidebar-section-title">Velocidad</p>
+    <button type="button" class="nav-btn theme-btn" id="modeBtn"></button>
+  </div>
+
+  <div class="sidebar-section">
+    <p class="sidebar-section-title">Restricciones alimentarias</p>
+    <p class="panel-hint">La Recetera las va a tener en cuenta en cada receta que te sugiera.</p>
+    <div class="diet-options" id="dietOptions"></div>
+  </div>
+
+  <div class="sidebar-section">
+    <p class="sidebar-section-title" id="bookmarksTitle">Recetas guardadas</p>
+    <div class="panel-body" id="bookmarksList"></div>
+  </div>
+
+  <div class="sidebar-section">
+    <p class="sidebar-section-title" id="shoppingTitle">Lista de compras</p>
+    <div class="panel-body" id="shoppingList"></div>
+    <div class="panel-actions" id="shoppingActions" hidden>
+      <button type="button" class="panel-action" id="copyListBtn">Copiar lista</button>
+      <button type="button" class="panel-action" id="downloadListBtn">Descargar .txt</button>
+      <button type="button" class="panel-action danger" id="clearListBtn">Vaciar lista</button>
+    </div>
+  </div>
+</aside>
+
+<script src="config.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

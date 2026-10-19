@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trivia General</title>
+<meta name="description" content="Trivia de diez preguntas sobre historia, geografía, ciencia, arte y deportes. Cuanto más rápido respondas, más puntos.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231a1613'/%3E%3Crect x='9' y='9' width='14' height='14' fill='%23e8590c'/%3E%3C/svg%3E">
+<link rel="canonical" href="https://ar-bsb.github.io/trivia.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ar-BSB">
+<meta property="og:title" content="Trivia General">
+<meta property="og:description" content="Trivia de diez preguntas sobre historia, geografía, ciencia, arte y deportes. Cuanto más rápido respondas, más puntos.">
+<meta property="og:url" content="https://ar-bsb.github.io/trivia.html">
+<meta property="og:locale" content="es_AR">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Trivia General">
+<meta name="twitter:description" content="Trivia de diez preguntas sobre historia, geografía, ciencia, arte y deportes. Cuanto más rápido respondas, más puntos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#dde5ea;--ink:#1b2b34;--card:#fff;--edge:#9fb0b9;--accent:#0a9396;--ok:#1f8a4c;--bad:#c8372d}
+@media(prefers-color-scheme:dark){:root{--bg:#182329;--ink:#e6eef2;--card:#22333b;--edge:#5d7480}}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:'Karla',system-ui,sans-serif;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:16px}
+main{width:100%;max-width:560px;background:var(--card);border:1.5px solid var(--edge);border-radius:14px;padding:28px 24px;box-shadow:4px 5px 0 var(--edge)}
+h1{font-size:30px;margin-bottom:8px}
+p{line-height:1.5}
+.muted{opacity:.75;font-size:15px}
+.row{display:flex;justify-content:space-between;font-size:15px;margin-bottom:10px}
+.bar{height:6px;background:var(--bg);border-radius:3px;overflow:hidden;margin-bottom:20px}
+.bar i{display:block;height:100%;width:100%;background:var(--accent);transition:width .1s linear}
+h2{font-size:22px;line-height:1.3;margin-bottom:18px}
+.opts{display:grid;gap:10px}
+.opt,.go{font:inherit;font-size:17px;text-align:left;padding:12px 14px;border:1.5px solid var(--ink);border-radius:10px;background:none;color:inherit;cursor:pointer}
+.opt:hover:not(:disabled){transform:translateY(-2px)}
+.opt:disabled{cursor:default}
+.opt{color:#fff;border:none;font-weight:700;box-shadow:0 3px 0 rgba(0,0,0,.25);transition:transform .1s,opacity .2s}
+.opt:nth-child(1){background:#2f6fdb}.opt:nth-child(2){background:#a8530a}.opt:nth-child(3){background:#17754a}.opt:nth-child(4){background:#8a4fc7}
+.opt:disabled{opacity:.4}
+.opt.ok{opacity:1;outline:4px solid var(--ink);outline-offset:2px}
+.opt.bad{opacity:.6;text-decoration:line-through}
+.acts{display:flex;gap:12px;flex-wrap:wrap}
+.alt{background:none;color:inherit;border:1.5px solid var(--ink)}
+.go.alt:hover{background:var(--ink);color:var(--card)}
+.go{margin-top:22px;text-align:center;font-weight:700;background:var(--accent);border-color:var(--accent);color:#fff;padding:12px 26px}
+.go:hover{filter:brightness(1.1);background:var(--accent);color:#fff}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.big{font-size:54px;font-weight:700;margin:6px 0}
+.hide{display:none}
+</style>
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<main>
+<a class="home-link" href="index.html">← Volver al inicio</a>
+  <section id="start">
+    <h1>Trivia General</h1>
+    <p>Diez preguntas por ronda de historia, geografía, ciencia, arte y deportes. Cuanto más rápido responda, más puntos suma.</p>
+    <p class="muted" id="best" style="margin-top:12px"></p>
+    <button class="go" id="play">Jugar</button>
+  </section>
+  <section id="quiz" class="hide">
+    <div class="row"><span id="cat"></span><span id="prog"></span><span id="sc"></span></div>
+    <div class="bar"><i id="fill"></i></div>
+    <h2 id="q"></h2>
+    <div class="opts" id="opts"></div>
+  </section>
+  <section id="end" class="hide">
+    <h1>Resultado</h1>
+    <div class="big" id="final"></div>
+    <p id="detail"></p>
+    <p class="muted" id="best2" style="margin-top:8px"></p>
+    <button class="go" id="again">Nueva partida</button>
+  </section>
+</main>
+<script>
+(()=>{
+// [categoría, pregunta, correcta, incorrecta, incorrecta, incorrecta]
+const Q=[
+['Historia','¿En qué año llegó Colón a América?','1492','1453','1519','1588'],
+['Historia','¿En qué año se declaró la independencia argentina?','1816','1810','1853','1880'],
+['Historia','¿Quién fue el primer presidente de los Estados Unidos?','George Washington','Abraham Lincoln','Thomas Jefferson','Benjamin Franklin'],
+['Historia','¿En qué año cayó el Muro de Berlín?','1989','1961','1975','1991'],
+['Historia','¿Qué civilización construyó Machu Picchu?','Los incas','Los aztecas','Los mayas','Los olmecas'],
+['Historia','¿En qué año terminó la Segunda Guerra Mundial?','1945','1939','1918','1950'],
+['Historia','¿Quién lideró el Cruce de los Andes?','José de San Martín','Manuel Belgrano','Simón Bolívar','Juan Manuel de Rosas'],
+['Historia','¿Qué ciudad era la capital del Imperio bizantino?','Constantinopla','Roma','Atenas','Alejandría'],
+['Historia','¿En qué año comenzó la Revolución Francesa?','1789','1776','1804','1848'],
+['Historia','¿Qué país gobernó Cleopatra?','Egipto','Grecia','Roma','Persia'],
+['Geografía','¿Cuál es la capital de Australia?','Canberra','Sídney','Melbourne','Perth'],
+['Geografía','¿Cuál es el río más caudaloso de Sudamérica?','El Amazonas','El Paraná','El Orinoco','El Magdalena'],
+['Geografía','¿Cuál es la montaña más alta de América?','Aconcagua','Everest','Denali','Chimborazo'],
+['Geografía','¿Cuál es el país más grande del mundo por superficie?','Rusia','Canadá','China','Estados Unidos'],
+['Geografía','¿Cuál es la capital de Canadá?','Ottawa','Toronto','Vancouver','Montreal'],
+['Geografía','¿Cuál es el océano más grande?','Pacífico','Atlántico','Índico','Ártico'],
+['Geografía','Las Cataratas del Iguazú están en la frontera de Argentina y…','Brasil','Paraguay','Uruguay','Bolivia'],
+['Geografía','¿Qué país tiene forma de bota?','Italia','Grecia','Portugal','España'],
+['Geografía','¿Cuál es el desierto cálido más grande del mundo?','El Sahara','El Gobi','El Kalahari','El de Atacama'],
+['Geografía','¿Cuál es la capital de Japón?','Tokio','Kioto','Osaka','Seúl'],
+['Ciencia','¿Cuál es el planeta más cercano al Sol?','Mercurio','Venus','Marte','Júpiter'],
+['Ciencia','¿Cuál es el símbolo químico del oro?','Au','Ag','Or','Go'],
+['Ciencia','¿Cuántos huesos tiene un adulto?','206','150','312','180'],
+['Ciencia','¿Qué gas absorben las plantas para la fotosíntesis?','Dióxido de carbono','Oxígeno','Nitrógeno','Hidrógeno'],
+['Ciencia','¿Quién formuló la teoría de la relatividad?','Albert Einstein','Isaac Newton','Galileo Galilei','Nikola Tesla'],
+['Ciencia','¿Cuál es el órgano más grande del cuerpo humano?','La piel','El hígado','El corazón','Los pulmones'],
+['Ciencia','¿A qué temperatura hierve el agua al nivel del mar?','100 °C','90 °C','120 °C','80 °C'],
+['Ciencia','¿Cuál es el animal más grande del mundo?','La ballena azul','El elefante africano','El tiburón ballena','La jirafa'],
+['Arte y cultura','¿Quién pintó La Gioconda?','Leonardo da Vinci','Miguel Ángel','Rafael','Salvador Dalí'],
+['Arte y cultura','¿Quién escribió Don Quijote de la Mancha?','Miguel de Cervantes','Lope de Vega','Gabriel García Márquez','Jorge Luis Borges'],
+['Arte y cultura','¿Quién escribió el poema Martín Fierro?','José Hernández','Domingo F. Sarmiento','Ricardo Güiraldes','Leopoldo Lugones'],
+['Arte y cultura','¿Quién compuso la Novena Sinfonía?','Ludwig van Beethoven','Wolfgang A. Mozart','Johann S. Bach','Frédéric Chopin'],
+['Arte y cultura','¿Quién pintó el Guernica?','Pablo Picasso','Diego Velázquez','Francisco de Goya','Joan Miró'],
+['Arte y cultura','¿Cuál es la lengua más hablada del mundo como lengua materna?','El chino mandarín','El inglés','El español','El hindi'],
+['Deportes y general','¿Cada cuántos años se juega el Mundial de fútbol?','4','2','3','5'],
+['Deportes y general','¿Qué selección ganó el Mundial de 2022?','Argentina','Francia','Brasil','Croacia'],
+['Deportes y general','¿En qué país nacieron los Juegos Olímpicos antiguos?','Grecia','Italia','Egipto','Turquía'],
+['Deportes y general','¿Cuántos jugadores de un equipo están en la cancha en básquet?','5','6','7','4'],
+['Deportes y general','¿Cuántos colores tiene el arcoíris tradicional?','7','5','6','8'],
+['Deportes y general','¿Cuál es la moneda de Japón?','El yen','El won','El yuan','El baht'],
+['Historia','¿Quién fue el primer hombre en pisar la Luna?','Neil Armstrong','Buzz Aldrin','Yuri Gagarin','John Glenn'],
+['Historia','¿En qué año llegó el ser humano a la Luna?','1969','1965','1972','1975'],
+['Historia','¿Qué faraón tenía la tumba hallada por Howard Carter en 1922?','Tutankamón','Ramsés II','Keops','Akenatón'],
+['Historia','¿Quién lideró la Revolución rusa de 1917?','Vladimir Lenin','Iósif Stalin','León Trotski','Nicolás II'],
+['Historia','¿Qué presidente argentino impulsó el voto femenino en 1947?','Juan Domingo Perón','Hipólito Yrigoyen','Julio A. Roca','Arturo Illia'],
+['Historia','¿En qué año fue la Revolución de Mayo?','1810','1816','1806','1820'],
+['Historia','¿En qué año fue la Guerra de Malvinas?','1982','1978','1986','1990'],
+['Historia','¿Qué cultura construyó el Partenón?','La griega','La romana','La persa','La egipcia'],
+['Historia','¿De qué país fue emperador Napoleón Bonaparte?','Francia','Italia','España','Austria'],
+['Historia','¿En qué año se hundió el Titanic?','1912','1905','1920','1898'],
+['Historia','¿Qué sistema de escritura usaban los antiguos egipcios?','Jeroglíficos','Cuneiforme','Runas','Alfabeto latino'],
+['Geografía','¿Cuál es la capital de Brasil?','Brasilia','Río de Janeiro','San Pablo','Salvador'],
+['Geografía','¿Qué cordillera recorre Sudamérica de norte a sur?','Los Andes','Los Alpes','Los Apalaches','El Himalaya'],
+['Geografía','¿Cuál es el país con más habitantes del mundo?','India','China','Estados Unidos','Indonesia'],
+['Geografía','¿Qué río atraviesa París?','El Sena','El Támesis','El Danubio','El Rin'],
+['Geografía','¿Cuál es el país más pequeño del mundo?','Ciudad del Vaticano','Mónaco','San Marino','Liechtenstein'],
+['Geografía','¿Qué estrecho separa España de Marruecos?','El de Gibraltar','El de Magallanes','El Bósforo','El de Mesina'],
+['Geografía','¿Cuál es la capital de Chile?','Santiago','Valparaíso','Concepción','Lima'],
+['Geografía','¿En qué provincia argentina están las Cataratas del Iguazú?','Misiones','Corrientes','Chaco','Formosa'],
+['Geografía','¿Cuál es la capital de Egipto?','El Cairo','Alejandría','Luxor','Guiza'],
+['Geografía','¿Qué país es famoso por sus canales y sus tulipanes?','Países Bajos','Bélgica','Dinamarca','Suiza'],
+['Ciencia','¿Cuántos planetas tiene el sistema solar?','8','9','7','10'],
+['Ciencia','¿Cuál es el planeta más grande del sistema solar?','Júpiter','Saturno','Neptuno','La Tierra'],
+['Ciencia','¿Qué metal es líquido a temperatura ambiente?','Mercurio','Plomo','Aluminio','Hierro'],
+['Ciencia','¿Qué vitamina produce el cuerpo con la luz del sol?','Vitamina D','Vitamina C','Vitamina A','Vitamina B12'],
+['Ciencia','¿Cuál es el hueso más largo del cuerpo humano?','El fémur','La tibia','El húmero','El peroné'],
+['Ciencia','¿Qué científico descubrió la penicilina?','Alexander Fleming','Louis Pasteur','Marie Curie','Robert Koch'],
+['Ciencia','¿Cuál es la fórmula química del agua?','H₂O','CO₂','O₂','NaCl'],
+['Ciencia','¿Qué instrumento registra los terremotos?','El sismógrafo','El barómetro','El termómetro','El anemómetro'],
+['Ciencia','¿Dónde está la información genética de las células?','En el ADN','En la glucosa','En el calcio','En la clorofila'],
+['Ciencia','¿Qué planeta se conoce como el planeta rojo?','Marte','Venus','Mercurio','Júpiter'],
+['Ciencia','¿Cuál es el animal terrestre más rápido?','El guepardo','El león','El caballo','El antílope'],
+['Ciencia','¿Qué gas forma la mayor parte de la atmósfera terrestre?','Nitrógeno','Oxígeno','Dióxido de carbono','Argón'],
+['Arte y cultura','¿Quién escribió Cien años de soledad?','Gabriel García Márquez','Mario Vargas Llosa','Julio Cortázar','Pablo Neruda'],
+['Arte y cultura','¿Quién escribió Rayuela?','Julio Cortázar','Jorge Luis Borges','Ernesto Sabato','Adolfo Bioy Casares'],
+['Arte y cultura','¿Quién escribió Romeo y Julieta?','William Shakespeare','Charles Dickens','Oscar Wilde','Molière'],
+['Arte y cultura','¿Quién pintó La noche estrellada?','Vincent van Gogh','Claude Monet','Paul Cézanne','Edvard Munch'],
+['Arte y cultura','¿De qué país es el flamenco?','España','Portugal','México','Italia'],
+['Arte y cultura','¿Qué instrumento tiene 88 teclas?','El piano','El órgano','El acordeón','La guitarra'],
+['Arte y cultura','¿Qué pintora mexicana es famosa por sus autorretratos?','Frida Kahlo','Remedios Varo','Tarsila do Amaral','María Izquierdo'],
+['Arte y cultura','¿Quién escribió El Principito?','Antoine de Saint-Exupéry','Julio Verne','Víctor Hugo','Albert Camus'],
+['Arte y cultura','¿Qué músico argentino era apodado El Flaco?','Luis Alberto Spinetta','Gustavo Cerati','Charly García','Fito Páez'],
+['Arte y cultura','¿De qué país es originaria la pizza?','Italia','Francia','Grecia','Estados Unidos'],
+['Arte y cultura','¿De qué país es típico el sushi?','Japón','China','Corea','Tailandia'],
+['Arte y cultura','¿Quién dirigió la película Titanic (1997)?','James Cameron','Steven Spielberg','Ridley Scott','Christopher Nolan'],
+['Arte y cultura','¿Quién escribió El Aleph?','Jorge Luis Borges','Julio Cortázar','Ernesto Sabato','Leopoldo Lugones'],
+['Arte y cultura','¿Qué baile es símbolo de Buenos Aires?','El tango','La samba','La cumbia','El flamenco'],
+['Arte y cultura','¿Qué bebida argentina se toma con bombilla?','El mate','El café','El té verde','La chicha'],
+['Deportes y general','¿Cuántos jugadores de un equipo de fútbol están en la cancha?','11','9','10','12'],
+['Deportes y general','¿Qué deporte practica Roger Federer?','Tenis','Golf','Básquet','Natación'],
+['Deportes y general','¿En qué deporte se usa un palo llamado putter?','Golf','Tenis','Hockey','Béisbol'],
+['Deportes y general','¿Cuántos anillos tiene la bandera olímpica?','5','4','6','7'],
+['Deportes y general','¿Qué país ganó el primer Mundial de fútbol, en 1930?','Uruguay','Argentina','Brasil','Italia'],
+['Deportes y general','¿Quién fue el capitán de Argentina campeón en 1986?','Diego Maradona','Daniel Passarella','Mario Kempes','Lionel Messi'],
+['Deportes y general','¿Cuántos minutos dura un partido de fútbol, sin descuento?','90','80','100','120'],
+['Deportes y general','¿En qué juego se gana con un jaque mate?','Ajedrez','Damas','Póker','Go'],
+['Deportes y general','¿Cuántos días tiene un año bisiesto?','366','365','364','367'],
+['Deportes y general','¿Qué color resulta de mezclar azul y amarillo?','Verde','Violeta','Naranja','Marrón'],
+['Deportes y general','¿Cuántos lados tiene un hexágono?','6','5','7','8'],
+['Deportes y general','¿Cuánto es 7 × 8?','56','54','48','63'],
+['Deportes y general','¿Cuál es el idioma oficial de Brasil?','Portugués','Español','Inglés','Francés']
+];
+const ROUND=10,TIME=15;
+const $=s=>document.querySelector(s);
+const show=id=>['start','quiz','end'].forEach(s=>$('#'+s).classList.toggle('hide',s!==id));
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+let best=0;try{best=+localStorage.getItem('trivia-best')||0}catch(e){}
+const showBest=()=>{const t=best?'Su mejor puntaje: '+best:'Todavía no hay puntaje guardado.';$('#best').textContent=t;$('#best2').textContent=best?'Mejor puntaje: '+best:''};
+let qs,i,score,right,left,tm,locked,used=new Set();
+function pickSet(){
+  let pool=Q.map((_,k)=>k).filter(k=>!used.has(k));
+  if(pool.length<ROUND){used.clear();pool=Q.map((_,k)=>k)}
+  const ch=shuffle(pool).slice(0,ROUND);ch.forEach(k=>used.add(k));
+  return ch.map(k=>Q[k]);
+}
+function start(keep){
+  if(!keep)used.clear();
+  qs=pickSet();i=0;score=0;right=0;show('quiz');next();
+}
+function next(){
+  if(i>=qs.length)return finish();
+  const [cat,q,ok,...bad]=qs[i];
+  locked=false;left=TIME;
+  $('#cat').textContent=cat;$('#prog').textContent='Respondidas: '+i+' / '+ROUND;$('#sc').textContent=score+' pts';
+  $('#q').textContent=q;$('#fill').style.width='100%';
+  const box=$('#opts');box.innerHTML='';
+  shuffle([ok,...bad]).forEach((o,n)=>{
+    const b=document.createElement('button');b.className='opt';b.dataset.v=o;b.dataset.l='ABCD'[n]+')  ';
+    b.textContent=b.dataset.l+o;
+    b.onclick=()=>answer(b,o===ok,ok);box.appendChild(b);
+  });
+  clearInterval(tm);
+  tm=setInterval(()=>{
+    left-=.1;$('#fill').style.width=Math.max(0,left/TIME*100)+'%';
+    if(left<=0)answer(null,false,ok);
+  },100);
+}
+function answer(btn,correct,ok){
+  if(locked)return;locked=true;clearInterval(tm);
+  document.querySelectorAll('.opt').forEach(b=>{
+    b.disabled=true;
+    if(b.dataset.v===ok){b.classList.add('ok');b.textContent='✓ '+b.dataset.l+b.dataset.v}
+  });
+  if(btn&&!correct){btn.classList.add('bad');btn.textContent='✗ '+btn.dataset.l+btn.dataset.v}
+  if(correct){right++;score+=100+Math.ceil(left)*5}
+  i++;
+  $('#sc').textContent=score+' pts';
+  $('#prog').textContent='Respondidas: '+i+' / '+ROUND;
+  setTimeout(next,1100);
+}
+function finish(){
+  if(score>best){best=score;try{localStorage.setItem('trivia-best',best)}catch(e){}}
+  $('#final').textContent=score+' pts';
+  $('#detail').textContent='Respondió bien '+right+' de '+ROUND+' preguntas.';
+  showBest();show('end');
+}
+$('#play').onclick=()=>start(false);$('#again').onclick=()=>start(false);
+showBest();
+})();
+</script>
+</body>
+</html>

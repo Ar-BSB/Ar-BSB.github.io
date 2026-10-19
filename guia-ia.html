@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía breve para el uso de asistentes de IA</title>
+<meta name="description" content="Qué es un asistente de inteligencia artificial, cómo preguntar bien y qué riesgos tener en cuenta. Para personas sin formación técnica.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231a1613'/%3E%3Crect x='9' y='9' width='14' height='14' fill='%23e8590c'/%3E%3C/svg%3E">
+<link rel="canonical" href="https://ar-bsb.github.io/guia-ia.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ar-BSB">
+<meta property="og:title" content="Guía breve para el uso de asistentes de IA">
+<meta property="og:description" content="Qué es un asistente de inteligencia artificial, cómo preguntar bien y qué riesgos tener en cuenta. Para personas sin formación técnica.">
+<meta property="og:url" content="https://ar-bsb.github.io/guia-ia.html">
+<meta property="og:locale" content="es_AR">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Guía breve para el uso de asistentes de IA">
+<meta name="twitter:description" content="Qué es un asistente de inteligencia artificial, cómo preguntar bien y qué riesgos tener en cuenta. Para personas sin formación técnica.">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('tema');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --muted: #5f6368;
+    --rule: #e4e4e4;
+    --accent: #0b5fff;
+    --card: #f7f7f8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #131313;
+      --fg: #e9e9e9;
+      --muted: #a2a2a2;
+      --rule: #2c2c2c;
+      --accent: #7aa7ff;
+      --card: #1b1b1d;
+    }
+  }
+  html[data-theme="light"] {
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --muted: #5f6368;
+    --rule: #e4e4e4;
+    --accent: #0b5fff;
+    --card: #f7f7f8;
+  }
+  html[data-theme="dark"] {
+    --bg: #131313;
+    --fg: #e9e9e9;
+    --muted: #a2a2a2;
+    --rule: #2c2c2c;
+    --accent: #7aa7ff;
+    --card: #1b1b1d;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .wrap {
+    max-width: 44rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.25rem 4rem;
+  }
+
+  header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  h1 {
+    font-size: 1.45rem;
+    line-height: 1.3;
+    margin: 0 0 .4rem;
+    font-weight: 600;
+    letter-spacing: -.01em;
+  }
+
+  .sub {
+    margin: 0;
+    color: var(--muted);
+    font-size: .9rem;
+  }
+
+  #toggle {
+    flex: none;
+    font: inherit;
+    font-size: .8rem;
+    color: var(--fg);
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: .35rem .8rem;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  #toggle:hover { border-color: var(--muted); }
+
+  h2 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 2.4rem 0 .8rem;
+    letter-spacing: -.005em;
+  }
+
+  p { margin: 0 0 .9rem; }
+
+  ul {
+    margin: 0 0 .9rem;
+    padding-left: 1.15rem;
+  }
+  li { margin-bottom: .4rem; }
+
+  strong { font-weight: 600; }
+
+  .ejemplo {
+    background: var(--card);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: .85rem 1rem;
+    margin: 0 0 .8rem;
+    font-size: .95rem;
+  }
+  .ejemplo p { margin: 0 0 .35rem; }
+  .ejemplo p:last-child { margin-bottom: 0; }
+  .etq {
+    color: var(--muted);
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    display: block;
+  }
+
+  .nota {
+    border-top: 1px solid var(--rule);
+    margin-top: 2.8rem;
+    padding-top: 1.2rem;
+    color: var(--muted);
+    font-size: .9rem;
+  }
+
+  @media (max-width: 420px) {
+    body { font-size: 16px; }
+    header { flex-direction: column; }
+    .wrap { padding-top: 1.8rem; }
+  }
+</style>
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<div class="wrap">
+
+  <a class="home-link" href="index.html">← Volver al inicio</a>
+<header>
+    <div>
+      <h1>Guía breve para el uso de asistentes de inteligencia artificial</h1>
+      <p class="sub">Para personas sin formación técnica.</p>
+    </div>
+    <button id="toggle" type="button" aria-label="Cambiar entre tema claro y oscuro">Tema</button>
+  </header>
+
+  <main>
+
+    <h2>1. Qué es un asistente de IA</h2>
+    <p>Un asistente de IA es un programa que recibe una instrucción escrita y produce una respuesta: un texto, un resumen, una lista, una imagen o un fragmento de código. No «sabe» cosas como una persona: calcula cuál es la respuesta más probable de acuerdo con lo que se le pide.</p>
+    <p>Los usos son muy amplios. Resulta apropiado para redactar y corregir textos, resumir documentos, ordenar ideas, explicar conceptos en palabras simples, traducir, proponer alternativas y resolver tareas repetitivas.</p>
+    <p>En cambio, no conviene confiar en él para datos exactos y actualizados, citas, normas o cifras; para decisiones médicas, legales o financieras; ni para ningún tema en el que la respuesta no pueda verificarse.</p>
+
+    <h2>2. Cómo preguntar bien</h2>
+    <p>Conviene respetar tres criterios: <strong>ser específico</strong>, <strong>dar contexto</strong> y <strong>pedir una explicación paso a paso</strong> cuando el tema no resulte conocido.</p>
+
+    <div class="ejemplo">
+      <p><span class="etq">Cocina — antes</span>¿Qué cocino?</p>
+      <p><span class="etq">Cocina — después</span>Se tiene arroz, dos huevos y queso. Se necesita una receta para dos personas, sin horno y en menos de treinta minutos. Indicar los pasos en orden.</p>
+    </div>
+
+    <div class="ejemplo">
+      <p><span class="etq">Escritura — antes</span>Escribir un correo.</p>
+      <p><span class="etq">Escritura — después</span>Redactar un correo formal a un proveedor para solicitar la factura de marzo. Tono cordial, extensión breve y un recordatorio del vencimiento.</p>
+    </div>
+
+    <div class="ejemplo">
+      <p><span class="etq">Corrección — antes</span>Revisar este texto.</p>
+      <p><span class="etq">Corrección — después</span>Corregir la ortografía y la puntuación del texto siguiente, conservar el tono formal y señalar cada cambio con su justificación.</p>
+    </div>
+
+    <h2>3. Riesgos y buenos hábitos</h2>
+    <ul>
+      <li>Verificar los datos importantes en fuentes oficiales antes de utilizarlos.</li>
+      <li>No compartir contraseñas, datos personales ni información de terceros.</li>
+      <li>Recordar que el asistente puede equivocarse: un tono seguro no garantiza exactitud.</li>
+      <li>Revisar siempre lo que se va a enviar o publicar.</li>
+    </ul>
+
+    <h2>4. Conversar con una IA o usar su API</h2>
+    <p>Conversar consiste en escribir en una interfaz ya preparada, como la de cualquier servicio web: no se requiere ningún conocimiento técnico.</p>
+    <p>Usar la API implica conectar el mismo modelo a un programa propio mediante una clave de acceso. Esto permite automatizar tareas, integrar la IA en una aplicación y construir un asistente personalizado. Requiere conocimientos técnicos o la ayuda de alguien que los tenga.</p>
+
+    <h2>Recomendaciones según el uso</h2>
+    <ul>
+      <li><strong>Programación:</strong> Claude resulta útil para modernizar programas antiguos y volverlos más prácticos.</li>
+      <li><strong>Escritura:</strong> DeepSeek o GPT funcionan bien como asistente de redacción y corrección.</li>
+      <li><strong>Cocina:</strong> sirve como ayuda general para aprovechar lo que haya disponible.</li>
+      <li><strong>Asistente propio:</strong> es posible crear uno a medida con claves de API de Groq.</li>
+    </ul>
+
+    <p class="nota">La IA es una herramienta de apoyo: amplía lo que se puede hacer, pero la decisión y la responsabilidad siguen siendo de la persona.</p>
+
+  </main>
+</div>
+
+<script>
+  (function () {
+    var btn = document.getElementById('toggle');
+    var root = document.documentElement;
+
+    function actual() {
+      var fijado = root.getAttribute('data-theme');
+      if (fijado) return fijado;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    function aplicar(tema) {
+      root.setAttribute('data-theme', tema);
+      try { localStorage.setItem('tema', tema); } catch (e) {}
+      btn.textContent = tema === 'dark' ? 'Tema claro' : 'Tema oscuro';
+    }
+
+    btn.textContent = actual() === 'dark' ? 'Tema claro' : 'Tema oscuro';
+
+    btn.addEventListener('click', function () {
+      aplicar(actual() === 'dark' ? 'light' : 'dark');
+    });
+  })();
+</script>
+</body>
+</html>

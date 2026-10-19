@@ -1,2 +1,2 @@
 # Ar-BSB.github.io
-Expo 2026 Bellones
+Sitio estático. Settings → Pages → Deploy from a branch → main / (root).
