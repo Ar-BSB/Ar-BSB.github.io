@@ -1,2 +1,3 @@
 # Ar-BSB.github.io
-Sitio estático. Settings → Pages → Deploy from a branch → main / (root).
+
+Hecho con Claude AI y con API KEYS de groq.ai
